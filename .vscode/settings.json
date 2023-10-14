@@ -1,10 +1,5 @@
 {
-  "python.testing.unittestArgs": ["-v", "-s", "./cw2", "-p", "*test*.py"],
-  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["cw2"],
   "python.testing.unittestEnabled": false,
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
-  },
-  "python.formatting.provider": "none",
-  "python.testing.pytestArgs": ["cw2"]
+  "python.testing.pytestEnabled": true
 }
