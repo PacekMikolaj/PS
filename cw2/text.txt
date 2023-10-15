@@ -1,0 +1,3 @@
+Ala,18,Krakow
+Karol,23,Krosno
+Marian,17,Warszawa
