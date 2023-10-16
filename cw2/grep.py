@@ -1,54 +1,63 @@
 import sys
-
-# import os
-# print(os.getcwd())
+import supportScripts
 
 params = sys.argv[1::]
 
 
-def getFile(fileName):
-    with open("./cw2/" + fileName, "r") as file:
-        return file.readlines()
+def getTextToCompare(params):
+    indexToCheck = -1
+    if ".txt" in params[-1]:
+        indexToCheck = -2
+    if params[indexToCheck] != "-i" and params[indexToCheck] != "-w":
+        return params[indexToCheck]
+    else:
+        return "Error"
 
 
 def grep(params):
-    print(params)
-    if len(params) != 3:
-        print("Niepoprawna liczba argumentów!")
-        return
-    if params[0] == "-i":
-        i_param(params[1::])
-        return
-    if params[0] == "-w":
-        w_param(params[1::])
-        return
-
-    print("Nieprawidłowy parametr!")
-    return
+    text = supportScripts.getInput()
+    textToCompare = getTextToCompare(params)
+    lower = False
+    if textToCompare == "Error":
+        return "Błąd!"
+    if supportScripts.checkIfParamIsUsed("-i", params) != -1:
+        lower = True
+    if supportScripts.checkIfParamIsUsed("-w", params) != -1:
+        return w_param(text.split("\n"), textToCompare, lower)
+    return classicCompare(text.split("\n"), textToCompare, lower)
 
 
-def i_param(params):
-    text = getFile(params[1])
-    textToCompare = params[0]
+def classicCompare(text, textToCompare, lower):
+    outputText = ""
 
     for line in text:
-        if textToCompare.lower() in line.lower():
-            print(line.split("\n")[0], end="")
-        print("")
+        if lower:
+            if textToCompare.lower() in line.lower():
+                outputText += line.split("\n")[0]
+        else:
+            if textToCompare in line:
+                outputText += line.split("\n")[0]
+        outputText += "\n"
+    return outputText
 
 
-def w_param(params):
-    text = getFile(params[1])
-    textToCompare = params[0]
+def w_param(text, textToCompare, lower):
+    outputText = ""
 
     for line in text:
         flag = False
-        for word in line.split(","):
-            if textToCompare == word.split("\n")[0]:
-                flag = True
-                break
+        for word in line.split(" "):
+            if lower:
+                if textToCompare.lower() == word.split("\n")[0].lower():
+                    flag = True
+                    break
+            else:
+                if textToCompare == word.split("\n")[0]:
+                    flag = True
+                    break
         if flag:
-            print(line)
+            outputText += line + "\n"
+    return outputText
 
 
-grep(params)
+# print(grep(params))

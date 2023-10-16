@@ -1,53 +1,49 @@
 import sys
-
-# import os
-# print(os.getcwd())
+import supportScripts
 
 params = sys.argv[1::]
 
 
-def getFile(fileName):
-    with open("./cw2/" + fileName, "r") as file:
-        return file.readlines()
-
-
 def cut(params):
-    print(params)
-    if len(params) != 3:
-        print("Niepoprawna liczba argumentów!")
-        return
-    if params[0] == "-f":
-        f_param(params[1::])
-        return
-    if params[0] == "-d":
-        d_param(params[1::])
-        return
+    text = supportScripts.getInput()
+    if len(params) % 2 != 0:
+        return "Error!"
+    if supportScripts.checkIfParamIsUsed("-d", params) != -1:
+        text = d_param(
+            text.split("\n"),
+            params[supportScripts.checkIfParamIsUsed("-d", params) + 1],
+        )
+    if supportScripts.checkIfParamIsUsed("-f", params) != -1:
+        text = f_param(
+            text.split("\n"),
+            params[supportScripts.checkIfParamIsUsed("-f", params) + 1].split(","),
+        )
+    return text
 
-    print("Nieprawidłowy parametr!")
-    return
 
-
-def f_param(params):
-    text = getFile(params[1])
-    params[0] = params[0].split(",")
+def f_param(text, columns):
+    outputText = ""
     for line in text:
-        line = line.split(",")
-
-        for index in params[0]:
+        line = line.split(" ")
+        for index in columns:
             textToPrint = line[int(index) - 1].split("\n")[0]
 
-            print(textToPrint, end=" ")
-        print("")
+            outputText += textToPrint + " "
+        outputText += "\n"
+
+    return outputText
 
 
-def d_param(params):
-    print(params)
-    text = getFile(params[1])
-    separator = params[0]
+def d_param(text, separator):
+    outputText = ""
+
     for line in text:
         line = line.split(separator)
         for word in line:
-            print(word.split("\n")[0], end="\n")
+            outputText += word.split("\n")[0] + " "
+        outputText += "\n"
+
+    return outputText
 
 
-cut(params)
+# print(cut(params))
