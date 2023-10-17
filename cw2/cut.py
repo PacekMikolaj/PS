@@ -25,10 +25,13 @@ def f_param(text, columns):
     outputText = ""
     for line in text:
         line = line.split(" ")
+
         for index in columns:
-            textToPrint = line[int(index) - 1].split("\n")[0]
+            if int(index) - 1 < len(line):
+                textToPrint = line[int(index) - 1].split("\n")[0]
 
             outputText += textToPrint + " "
+
         outputText += "\n"
 
     return outputText
@@ -39,9 +42,12 @@ def d_param(text, separator):
 
     for line in text:
         line = line.split(separator)
+        useEnter = False
         for word in line:
+            useEnter = True
             outputText += word.split("\n")[0] + " "
-        outputText += "\n"
+        if useEnter:
+            outputText += "\n"
 
     return outputText
 

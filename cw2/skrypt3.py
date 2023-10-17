@@ -1,7 +1,7 @@
 import argparse
 import grep
 import cut
-import operations
+import skrypt1
 import sys
 
 
@@ -89,15 +89,49 @@ def cutFnc():
     return result
 
 
-def operationsFnc():
-    operationsParser = argparse.ArgumentParser(
-        description="Funkcja wykonująca proste operacje na tekście."
+# def operationsFnc():
+#     args = operationsParser.parse_args()
+
+#     result = ""
+
+#     if args.string:
+#         result += args.string
+
+#     if args.operation:
+#         result += args.operation
+
+#     operations[args.operation](sys.argv[2::])
+
+#     return result
+
+
+# mainParser = argparse.ArgumentParser(description="Funkcja wyszukująca tekst.")
+
+# mainParser.add_argument("operation", help="Jaka operacja ma zostać wykonana.")
+
+# mainArgs = mainParser.parse_args()
+
+# if mainArgs.operation:
+#     if mainArgs.operation == "cut":
+#         cutFnc()
+#     if mainArgs.operation == "grep":
+#         grepFnc()
+#     if mainArgs.operation == "operation":
+#         operationsFnc()
+# else:
+#     print("Błąd!")
+
+
+def main(command_line=None):
+    mainParser = argparse.ArgumentParser(
+        description="Skrypt wywołujący jedną z 3 operacji."
     )
 
-    operationsParser.add_argument(
-        "operation",
-        # action="store_const",
-        help="Operacja, jaka ma zostać wykonana.",
+    subparsers = mainParser.add_subparsers(dest="function", required=True)
+
+    # operations
+    operationsParser = subparsers.add_parser(
+        "operations", help="Funkcja wykonująca proste operacje na tekście."
     )
 
     operationsParser.add_argument(
@@ -106,33 +140,70 @@ def operationsFnc():
         help="Teskt, na którym ma zostać wykonana operacja.",
     )
 
-    args = operationsParser.parse_args()
+    # cut
 
-    result = ""
+    cutParser = subparsers.add_parser(
+        "cut", description="Funkcja wycinająca fragment tekstu."
+    )
 
-    if args.string:
-        result += args.string
+    cutParser.add_argument(
+        "-f",
+        help="Pozwala pokazać tylko wybrane kolumny tekstu.",
+    )
 
-    if args.operation:
-        result += args.operation
+    cutParser.add_argument(
+        "-d",
+        help="Pozwala zastosować separator tekstu wybrany przez użytkownika.",
+    )
 
-    operations[args.operation](sys.argv[2::])
+    # grep
 
-    return result
+    grepParser = subparsers.add_parser("grep", description="Funkcja wyszukująca tekst.")
+
+    grepParser.add_argument(
+        "-i",
+        action="store_true",
+        help="Pozwala na wyszukiwanie pomijając wielkości liter.",
+    )
+    grepParser.add_argument(
+        "-w",
+        action="store_true",
+        help="Pozwala na wyszukiwanie DOKŁADNIE według wzoru.",
+    )
+    grepParser.add_argument(
+        "textToCompare",
+        help="Po czym powinien szukać",
+    )
+
+    mainArgs = mainParser.parse_args()
+
+    if mainArgs.function:
+        if mainArgs.function == "cut":
+            params = []
+            if mainArgs.f:
+                params.append("-f")
+                params.append(mainArgs.f)
+            if mainArgs.d:
+                params.append("-d")
+                params.append(mainArgs.d)
+            print(cut.cut(params))
+
+        if mainArgs.function == "grep":
+            params = []
+            params = []
+            if mainArgs.i:
+                params.append("-i")
+            if mainArgs.w:
+                params.append("-w")
+            if mainArgs.textToCompare:
+                params.append(mainArgs.textToCompare)
+            print(grep.grep(params))
+
+        if mainArgs.function == "operations":
+            skrypt1.doOperations(mainArgs.string)
+    else:
+        print("Błąd!")
 
 
-mainParser = argparse.ArgumentParser(description="Funkcja wyszukująca tekst.")
-
-mainParser.add_argument("operation", help="Jaka operacja ma zostać wykonana.")
-
-mainArgs = mainParser.parse_args()
-
-if mainArgs.operation:
-    if mainArgs.operation == "cut":
-        cutFnc()
-    if mainArgs.operation == "grep":
-        grepFnc()
-    if mainArgs.operation == "operation":
-        operationsFnc()
-else:
-    print("Błąd!")
+if __name__ == "__main__":
+    main()
