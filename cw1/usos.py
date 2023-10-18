@@ -1,7 +1,11 @@
 import sys
 import json
 
-with open('./PS/cw1/data.json', 'r') as file:
+import os
+cwd = os.getcwd()
+print(cwd)
+
+with open('./cw1/data.json', 'r') as file:
     data = json.load(file)
 
 math = data['math']
@@ -63,7 +67,7 @@ def isFloat(string):
         return False
     
 def saveChanges():
-    with open('./PS/cw1/data.json', 'w') as file:
+    with open('./cw1/data.json', 'w') as file:
         json.dump({ "math": math, "physics": physics }, file)
 
 def main():
