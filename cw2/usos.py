@@ -145,7 +145,11 @@ def getInput():
 def main():
     inputData = getInput().split("\n")
 
+
     for line in inputData:
+        if line == "grades":
+            showMarks()
+            continue
         if line != "":
             try:
                 if "+" in line:
@@ -166,7 +170,6 @@ def main():
                 print("Błąd składni!")
                 return
     saveChanges()
-    showMarks()
 
 
 main()
