@@ -1,5 +1,5 @@
 {
-  "python.testing.pytestArgs": ["cw3"],
+  "python.testing.pytestArgs": ["cw4"],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
   "[python]": {

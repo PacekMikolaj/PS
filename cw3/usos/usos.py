@@ -44,11 +44,11 @@ def main():
         Subject("Fizyka", list_of_students),
     ]
 
-    inputData = getInput().split("\n")
-    validLines = OptionsParser.parse_lines(inputData, command)
+    # inputData = getInput().split("\n")
+    # validLines = OptionsParser.parse_lines(inputData, command)
 
-    for line in inputData:
-        line = line.split(" ")
+    # for line in inputData:
+    #     line = line.split(" ")
 
     # print(list_of_subjects)
 
