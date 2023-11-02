@@ -50,16 +50,16 @@ def main():
     # for line in inputData:
     #     line = line.split(" ")
 
-    # print(list_of_subjects)
+    print(list_of_subjects)
 
-    # list_of_subjects[0].add(list_of_students[0], 3.0)
-    # list_of_subjects[0].add(list_of_students[0], 3.5)
-    # list_of_subjects[1].add(list_of_students[0], 5.0)
+    list_of_subjects[0].add(list_of_students[0], 3.0)
+    list_of_subjects[0].add(list_of_students[0], 3.5)
+    list_of_subjects[1].add(list_of_students[0], 5.0)
 
-    # print(list_of_subjects[0])
-    # print(list_of_students)
-    # list_of_subjects[0].remove(list_of_students[0], 5)
-    # print(list_of_students[0])
+    print(list_of_subjects[0])
+    print(list_of_students)
+    list_of_subjects[0].remove(list_of_students[0], 5)
+    print(list_of_students[0])
 
 
 main()

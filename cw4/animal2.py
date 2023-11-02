@@ -41,6 +41,7 @@ def main():
     display(opisy_ruchow, show_index=False)
 
 
-print("Start")
-main()
-print("Stop")
+# Odkomentować, żęby działało
+# print("Start")
+# main()
+# print("Stop")
