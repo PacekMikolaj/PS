@@ -12,8 +12,6 @@ class MoveDirection(Enum):
 
 def run(moves, move_descriptions):
     result = []
-    # for move in moves:
-    #     move_enum = OptionsParser.parse_options([move], MoveDirection)
     valid_moves = OptionsParser.parse_options(moves, MoveDirection)
     for move in valid_moves:
         result.append(move_descriptions.get(move.value, ""))

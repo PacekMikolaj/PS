@@ -13,7 +13,6 @@ class Simulation:
 
     def run(self):
         numberOfAnimals = len(self.animals)
-        print("halo")
         for indexOfMove, direction in enumerate(self.directions):
             animal = self.animals[indexOfMove % numberOfAnimals]
             animal.move(direction)
