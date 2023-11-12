@@ -1,11 +1,11 @@
 class Student:
-
     id = 0
-    def __init__(self, name,surname):
+
+    def __init__(self, name, surname):
         self.name = name
         self.surname = surname
-        self.id = id
-        id+=1
+        self.id = Student.id
+        Student.id += 1
 
     def add(self, subjectName, mark):
         try:
@@ -24,15 +24,9 @@ class Student:
         return self.name
 
     def __str__(self):
-        returnString = self.name + "\n\t"
-        for key in self.marks.keys():
-            returnString += key + "\t"
-            for mark in self.marks[key]:
-                returnString += str(mark) + " "
-            returnString += "\n\t"
-        return returnString
+        return self.name + " " + self.surname
 
     def __eq__(self, other):
-        if not isinstance(other, Student):
-            return TypeError
-        return other.id == self.id
+        if other == None:
+            return False
+        return other == self.id

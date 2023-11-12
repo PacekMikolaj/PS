@@ -5,14 +5,13 @@ class Subject:
     # def __repr__(self):
     #     return self.name
 
-    # def __str__(self):
-    #     returnString = self.name + "\n\t"
-    #     returnString += "Maksymalna liczba studentów: " + str(self.maxStudents) + "\n\t"
-    #     returnString += "Aktualna liczba studentów: " + str(len(self.students)) + "\n\t"
-    #     returnString += "Zapisani studenci: \n\t\t"
-    #     for student in self.students:
-    #         returnString += student.name + "\n\t\t"
-    #     return returnString
+    def __str__(self):
+        return self.name + "\n\t"
+
+    def __eq__(self, other):
+        if other == None:
+            return False
+        return other.name == self.name
 
     # def add(self, student, mark):
     #     print(student.name, mark)
