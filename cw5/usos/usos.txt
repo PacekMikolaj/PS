@@ -1,0 +1,6 @@
+__MATEMATYKA__
+Mikolaj_Pacek:5.0:5.0:5.0:5.0
+Jakub_Malinowski:5.0:5.0:5.0:5.0:5.0
+__FIZYKA__
+Mikolaj_Pacek::4.0:3.0:4.0:3.0:4.0:3.0:4.0:3.0
+Jakub_Malinowski::4.0:4.0:4.0:4.0:4.0:4.0:4.0:4.0
