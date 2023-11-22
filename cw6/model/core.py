@@ -3,16 +3,43 @@
 from enum import Enum
 
 
+def log(func):
+    def wrapper(*args, **kwargs):
+        print(f"Nazwa kwalifikowana: {func.__qualname__}")
+        args_str = " ".join(map(str, args))
+        print(f"Argumenty: {args_str}")
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+def log_to(file):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            with open(file, "a") as f:
+                f.write(
+                    f"Function {func.__name__} called with arguments {args} and keyword arguments {kwargs}. Result: {result}\n"
+                )
+            return result
+
+        return wrapper
+
+    return decorator
+
+
 class Vector2d:
     def __init__(self, x, y):
         self.__x = x
         self.__y = y
 
     @property
+    @log_to("dziennik")
     def get_x(self):
         return self.__x
 
     @property
+    @log
     def get_y(self):
         return self.__y
 
@@ -28,15 +55,15 @@ class Vector2d:
         else:
             return False
 
+    @log_to(file="./cw6/dziennik")
     def add(self, other_Vector2d):
-        newObj = Vector2d(self.__x + other_Vector2d.__x,
-                          self.__y + other_Vector2d.__y)
+        newObj = Vector2d(self.__x + other_Vector2d.__x, self.__y + other_Vector2d.__y)
 
         return newObj
 
+    @log
     def subtract(self, other_Vector2d):
-        newObj = Vector2d(self.__x - other_Vector2d.__x,
-                          self.__y - other_Vector2d.__y)
+        newObj = Vector2d(self.__x - other_Vector2d.__x, self.__y - other_Vector2d.__y)
 
         return newObj
 
@@ -57,8 +84,8 @@ class Vector2d:
     def opposite(self):
         return Vector2d(self.__x * (-1), self.__y * (-1))
 
-    # # Polak kazal rozwiazac problem, to tez to zostalo rozwiazane w jak najglupszy sposob, nie kopiujcie tego 1:1
-    # # pozdrawiam
+    # Polak kazal rozwiazac problem, to tez to zostalo rozwiazane w jak najglupszy sposob, nie kopiujcie tego 1:1
+    # pozdrawiam
     def __hash__(self) -> int:
         return self.__x
 
@@ -66,7 +93,7 @@ class Vector2d:
         return self.__x == other_Vector2d.__x and self.__y == other_Vector2d.__y
 
     def __str__(self) -> str:
-        return f'({self.__x},{self.__y})'
+        return f"({self.__x},{self.__y})"
 
 
 class MapDirection(Enum):
@@ -91,7 +118,7 @@ class MapDirection(Enum):
 
 
 class MoveDirection(Enum):
-    FORWARD = 'f'
-    BACKWARD = 'b'
-    LEFT = 'l'
-    RIGHT = 'r'
+    FORWARD = "f"
+    BACKWARD = "b"
+    LEFT = "l"
+    RIGHT = "r"

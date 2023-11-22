@@ -38,7 +38,11 @@ class MapVisualizer:
         Returns:
             String representation of the selected region of the map.
         """
+        
+        # jesli chcemy pokazac, ze error sie wypisuje, to komentujemy pierwszego buildera
         builder: str = "\033c" # Clear screen
+        # builder: str = ""
+
         for i in range(upperRight.get_y + 1, lowerLeft.get_y - 1, -1):
             if i == upperRight.get_y + 1:
                 builder += self._drawHeader(lowerLeft, upperRight)

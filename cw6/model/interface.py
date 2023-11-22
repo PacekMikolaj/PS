@@ -26,8 +26,7 @@ class IMoveValidator(ABC):
 
 
 class IWorldMap(ABC):
-
-    from model.animal_new import Animal
+    from model.animalV2 import Animal
 
     @abstractmethod
     def place(self, animal: Animal) -> bool:

@@ -1,7 +1,15 @@
 from model.interface import IMoveValidator, IWorldMap
-from model.animal_new import Animal
+from model.animalV2 import Animal
 from model.core import Vector2d, MoveDirection
 from view import MapVisualizer
+
+
+class PositionAlreadyOccupiedError(Exception):
+    def __init__(self, vector: Vector2d) -> None:
+        self.vector = vector
+
+    def __str__(self) -> str:
+        return f"Position {self.vector} is already occupied"
 
 
 class WorldMap(IMoveValidator, IWorldMap):
@@ -13,11 +21,14 @@ class WorldMap(IMoveValidator, IWorldMap):
             return False
         return True
 
-    def place(self, animal: Animal) -> bool:
-        if self.canMoveTo(animal.position):
-            self.animal[animal.position] = animal
-            return True
-        return False
+    def place(self, animal: Animal) -> bool | None:
+        try:
+            if self.canMoveTo(animal.position):
+                self.animal[animal.position] = animal
+                return True
+            raise PositionAlreadyOccupiedError(animal.position)
+        except PositionAlreadyOccupiedError as error:
+            print(error)
 
     def move(self, animal: Animal, direction: MoveDirection) -> None:
         if animal.position in self.animal.keys():
@@ -43,7 +54,9 @@ class RectangularMap(WorldMap):
         self.y = y
 
     def canMoveTo(self, position: Vector2d) -> bool:
-        if position.follows(Vector2d(0, 0)) and position.precedes(Vector2d(self.x, self.y)):
+        if position.follows(Vector2d(0, 0)) and position.precedes(
+            Vector2d(self.x, self.y)
+        ):
             if self.isOccupied(position):
                 return False
             return True
